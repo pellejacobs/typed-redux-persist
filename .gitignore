@@ -42,3 +42,5 @@ typings
 
 # output folder
 out
+
+bundle.d.ts
