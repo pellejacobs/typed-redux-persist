@@ -1,5 +1,4 @@
-# Typed Redux Persist  [![Build Status](https://travis-ci.org/pellejacobs/typed-redux-persist.svg?branch=master)](https://travis-ci.org/pellejacobs/typed-redux-persist)
-
+# Typed Redux Persist 
 
 The type definition for [`redux-persist`](https://github.com/rt2zz/redux-persist.git)
 
