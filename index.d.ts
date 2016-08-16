@@ -1,3 +1,5 @@
+import * as constants from './constants'
+
 import { Store, StoreEnhancer, Reducer } from 'redux'
 
 interface CreateTransformConfig {
@@ -19,7 +21,7 @@ interface PersistStoreConfig<S> {
   debounce?: number
 }
 
-declare namespace ReduxPersist {
+declare module ReduxPersist {
   interface Transform<S> { 
     in: Reducer<S> 
     out: Reducer<S> 
