@@ -1,19 +1,28 @@
-import { Store, StoreEnhancer } from 'redux'
+import { Store, StoreEnhancer, Reducer } from 'redux'
 
-interface PersistStoreConfig {
-  blacklist: string[]
-  whitelist: string[]
+interface CreateTransformConfig {
+  whitelist?: string[]
+  blacklist?: string[]
+}
+
+interface PersistStoreConfig<S> {
+  blacklist?: string[]
+  whitelist?: string[]
   /**
-   * a storage object is an object that implements setItem
+   * a storage object is an object that implements setItem, getItem, removeItem and getAllKeys 
    */
-  storage: any
+  storage?: any
+  transforms?: ReduxPersist.Transform<S>[]
+  /**
+   * Debounce interval applied to storage calls.
+   */
+  debounce?: number
 }
 
 declare namespace ReduxPersist {
-  interface Constants {
-    keyPrefix: string
-    REHYDRATE: string
-    REHYDRATE_ERROR: string
+  interface Transform<S> { 
+    in: Reducer<S> 
+    out: Reducer<S> 
   }
 
   interface Persistor {
@@ -40,6 +49,13 @@ declare namespace ReduxPersist {
     rehydrate: (incoming: {} | string, options?: { serial: boolean }) => {}
   }
 
+  var storages: {
+    asyncLocalStorage: any
+    asyncSessionStorage: any
+  }
+
+  function createTransform<S>(inbound: Reducer<S>, outbound: Reducer<S>, config?: {}): Transform<S>
+
   /**
    * @param [config] Has a log option enable logging to the console
    * 
@@ -58,12 +74,7 @@ declare namespace ReduxPersist {
    * 
    * @returns Persistor object to manipulate the state further
    */
-  function persistStore<S>(store: Store<S>, config?: PersistStoreConfig, callback?: () => any): Persistor
+  function persistStore<S>(store: Store<S>, config?: PersistStoreConfig<S>, callback?: () => any): Persistor
 }
 
 export = ReduxPersist
-
-declare module "redux-persist/constants" {
-  var constants: ReduxPersist.Constants
-  export = constants
-}

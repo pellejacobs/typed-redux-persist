@@ -6,7 +6,7 @@
   "globalDevDependencies": {
     "node": "registry:env/node#6.0.0+20160813135048"
   },
-  "globalDependencies": {
-    "redux": "registry:dt/redux#3.5.2+20160703092728"
+  "peerDependencies": {
+    "redux": "github:reactjs/redux/index.d.ts#d18a977260cf29d49499781367f56353ebd9697a"
   }
 }
